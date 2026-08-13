@@ -14,6 +14,10 @@ def create_app():
     def health():
         return jsonify({"status": "ok"})
 
+    from routes.paginas import paginas_bp
+
+    app.register_blueprint(paginas_bp)
+
     return app
 
 

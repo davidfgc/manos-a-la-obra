@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<hgroup>
+  <h1>Manos a la Obra</h1>
+  <p>Informacion centralizada de ayuda para el terremoto en Colombia.</p>
+</hgroup>
+
+<div class="grid">
+  <article>
+    <h2>Archivos 3D para imprimir</h2>
+    <p>Modelos imprimibles como ferulas y piezas de ayuda.</p>
+    <a href="/impresion-3d" role="button">Ver archivos 3D</a>
+  </article>
+  <article>
+    <h2>Puntos de acopio</h2>
+    <p>Lugares que reciben donaciones, filtrables por pais y ciudad.</p>
+    <a href="/puntos-acopio" role="button">Ver puntos de acopio</a>
+  </article>
+</div>
+
+<article>
+  <h3>Tenes informacion para aportar?</h3>
+  <p>Escribime en X:
+    <a href="https://x.com/{{ x_handle }}" target="_blank" rel="noopener">@{{ x_handle }}</a>.
+    Reviso y agrego la informacion al sitio.</p>
+  <small>La informacion es colaborativa; verifica antes de actuar.</small>
+</article>
+{% endblock %}

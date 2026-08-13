@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Manos a la Obra{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <nav class="container">
+    <ul><li><strong><a href="/">Manos a la Obra</a></strong></li></ul>
+    <ul>
+      <li><a href="/impresion-3d">Impresion 3D</a></li>
+      <li><a href="/puntos-acopio">Puntos de acopio</a></li>
+    </ul>
+  </nav>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
