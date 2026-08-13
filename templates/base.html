@@ -4,6 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Manos a la Obra{% endblock %}</title>
+
+  {# Metadatos para compartir en redes. Cada seccion sobreescribe estos bloques;
+     sin override se usan los de home (default). #}
+  {% set og_title %}{% block og_title %}Manos a la Obra — Ayuda para el terremoto en Colombia{% endblock %}{% endset %}
+  {% set og_desc %}{% block og_desc %}Archivos 3D para imprimir y puntos de acopio, curados y actualizados. Encontrá cómo ayudar hoy.{% endblock %}{% endset %}
+  {% set og_image %}{% block og_image %}/static/og/home.png{% endblock %}{% endset %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Manos a la Obra">
+  <meta property="og:locale" content="es_CO">
+  <meta property="og:url" content="{{ url_absoluta(request.path) }}">
+  <meta property="og:title" content="{{ og_title | trim }}">
+  <meta property="og:description" content="{{ og_desc | trim }}">
+  <meta property="og:image" content="{{ url_absoluta(og_image | trim) }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ og_title | trim }}">
+  <meta name="twitter:description" content="{{ og_desc | trim }}">
+  <meta name="twitter:image" content="{{ url_absoluta(og_image | trim) }}">
+
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>

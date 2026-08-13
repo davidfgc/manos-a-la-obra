@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 
-from config import X_HANDLE
+from config import SITE_URL, X_HANDLE
 
 
 def create_app():
@@ -8,7 +8,11 @@ def create_app():
 
     @app.context_processor
     def inject_globals():
-        return {"x_handle": X_HANDLE}
+        def url_absoluta(ruta):
+            """URL absoluta desde SITE_URL sin barras duplicadas."""
+            return SITE_URL + "/" + (ruta or "").lstrip("/")
+
+        return {"x_handle": X_HANDLE, "site_url": SITE_URL, "url_absoluta": url_absoluta}
 
     @app.route("/health")
     def health():

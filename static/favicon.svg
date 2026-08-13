@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" role="img" aria-label="Manos a la Obra">
+  <rect width="24" height="24" rx="5" fill="#0F4C81"/>
+  <g fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 20.4s-6.3-3.9-8.6-7.7C1.4 8.8 3.6 5.2 7 5.2c1.8 0 3.2 1.1 5 2.7 1.8-1.6 3.2-2.7 5-2.7 3.4 0 5.6 3.6 3.6 7.5-2.3 3.8-8.6 7.7-8.6 7.7z"/>
+    <path d="M8.5 12.5h2l1-2 2 4 1-2h2"/>
+  </g>
+</svg>
