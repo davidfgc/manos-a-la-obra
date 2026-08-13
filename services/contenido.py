@@ -78,6 +78,12 @@ def listar_modelos3d(destinatario=None, tamano=None, ciudad=None, *, path=DATA_P
     return {"activos": activos, "cubiertos": cubiertos}
 
 
+def _orden_punto(punto):
+    # Orden: Colombia primero, luego alfabético por nombre.
+    es_colombia = 0 if punto.get("pais") == "Colombia" else 1
+    return (es_colombia, (punto.get("nombre") or "").casefold())
+
+
 def listar_puntos(pais=None, ciudad=None, *, path=DATA_PATH):
     puntos = _cargar(path).get("puntos_acopio") or []
     resultado = []
@@ -91,6 +97,7 @@ def listar_puntos(pais=None, ciudad=None, *, path=DATA_PATH):
         punto = dict(p)
         punto["mapa_url"] = _mapa_url(p)
         resultado.append(punto)
+    resultado.sort(key=_orden_punto)
     return resultado
 
 

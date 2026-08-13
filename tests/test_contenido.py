@@ -57,6 +57,19 @@ def test_mapa_url_se_genera_cuando_falta(tmp_path):
     assert "Colombia" in punto["mapa_url"]
 
 
+def test_listar_puntos_ordena_colombia_primero_luego_alfabetico(tmp_path):
+    p = _escribir_yaml(tmp_path, """
+        puntos_acopio:
+          - {nombre: "Zeta", pais: "Colombia", ciudad: "Bogota", direccion: c}
+          - {nombre: "Madrina", pais: "España", ciudad: "Madrid", direccion: c}
+          - {nombre: "Alfa", pais: "Colombia", ciudad: "Bogota", direccion: c}
+          - {nombre: "Deblex", pais: "Estados Unidos", ciudad: "Miami", direccion: c}
+    """)
+    nombres = [x["nombre"] for x in contenido.listar_puntos(path=p)]
+    # Colombia primero (Alfa, Zeta), luego el resto alfabético (Deblex, Madrina).
+    assert nombres == ["Alfa", "Zeta", "Deblex", "Madrina"]
+
+
 def test_listar_puntos_pasa_donaciones(tmp_path):
     p = _escribir_yaml(tmp_path, """
         puntos_acopio:
