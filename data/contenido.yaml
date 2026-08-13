@@ -122,6 +122,13 @@ puntos_acopio:
     pais: "Colombia"
     ciudad: "Bogotá"
     direccion: "Calle 69 # 14-30"
+  - nombre: "Centro de acopio Barrio Troncal"
+    pais: "Colombia"
+    ciudad: "Cali"
+    direccion: "Carrera 11D # 41-75, Barrio Troncal"
+    recibe: "Alimentos no perecederos, pañales, pañitos, agua, colchonetas, sábanas, cobijas, almohadas"
+    horario: "Todo el día; sale el viernes hacia la zona rural (norte del Valle)"
+    contacto: "3168115913"
 
 # Grupos / comunidades externas mostradas en la home. Cada uno: {nombre, url}.
 grupos:
