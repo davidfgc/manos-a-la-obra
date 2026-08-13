@@ -29,13 +29,16 @@ def _mapa_url(punto):
 
 
 def listar_modelos3d(*, path=DATA_PATH):
-    return list(_cargar(path).get("modelos_3d") or [])
+    modelos = _cargar(path).get("modelos_3d") or []
+    return [m for m in modelos if isinstance(m, dict)]
 
 
 def listar_puntos(pais=None, ciudad=None, *, path=DATA_PATH):
     puntos = _cargar(path).get("puntos_acopio") or []
     resultado = []
     for p in puntos:
+        if not isinstance(p, dict):
+            continue
         if pais and p.get("pais") != pais:
             continue
         if ciudad and p.get("ciudad") != ciudad:
@@ -48,6 +51,6 @@ def listar_puntos(pais=None, ciudad=None, *, path=DATA_PATH):
 
 def opciones_filtro(*, path=DATA_PATH):
     puntos = _cargar(path).get("puntos_acopio") or []
-    paises = sorted({p.get("pais") for p in puntos if p.get("pais")})
-    ciudades = sorted({p.get("ciudad") for p in puntos if p.get("ciudad")})
+    paises = sorted({p.get("pais") for p in puntos if isinstance(p, dict) and p.get("pais")})
+    ciudades = sorted({p.get("ciudad") for p in puntos if isinstance(p, dict) and p.get("ciudad")})
     return {"paises": paises, "ciudades": ciudades}

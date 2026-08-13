@@ -52,6 +52,8 @@ def test_mapa_url_se_genera_cuando_falta(tmp_path):
     punto = contenido.listar_puntos(path=p)[0]
     assert punto["mapa_url"].startswith("https://www.google.com/maps/search/?api=1&query=")
     assert "Calle" in punto["mapa_url"]
+    assert "Bogota" in punto["mapa_url"]
+    assert "Colombia" in punto["mapa_url"]
 
 
 def test_mapa_url_respeta_override(tmp_path):
@@ -83,3 +85,38 @@ def test_archivo_inexistente_devuelve_vacio(tmp_path):
     assert contenido.listar_modelos3d(path=faltante) == []
     assert contenido.listar_puntos(path=faltante) == []
     assert contenido.opciones_filtro(path=faltante) == {"paises": [], "ciudades": []}
+
+
+def test_entrada_no_dict_se_ignora_sin_error(tmp_path):
+    p = _escribir_yaml(tmp_path, """
+        modelos_3d:
+          - "texto suelto"
+          - nombre: "Valido"
+            url: "https://x/y"
+        puntos_acopio:
+          - "otra cosa"
+          - nombre: "P1"
+            pais: "Colombia"
+            ciudad: "Bogota"
+            direccion: "Calle 1"
+    """)
+    assert [m["nombre"] for m in contenido.listar_modelos3d(path=p)] == ["Valido"]
+    assert [x["nombre"] for x in contenido.listar_puntos(path=p)] == ["P1"]
+    assert contenido.opciones_filtro(path=p) == {"paises": ["Colombia"], "ciudades": ["Bogota"]}
+
+
+def test_yaml_malformado_devuelve_vacio(tmp_path):
+    p = tmp_path / "contenido.yaml"
+    p.write_text("modelos_3d: [unclosed\n", encoding="utf-8")
+    assert contenido.listar_modelos3d(path=p) == []
+    assert contenido.listar_puntos(path=p) == []
+
+
+def test_listar_puntos_filtra_solo_por_ciudad(tmp_path):
+    p = _escribir_yaml(tmp_path, """
+        puntos_acopio:
+          - {nombre: P1, pais: Colombia, ciudad: Bogota, direccion: c1}
+          - {nombre: P2, pais: Ecuador, ciudad: Bogota, direccion: c2}
+          - {nombre: P3, pais: Colombia, ciudad: Medellin, direccion: c3}
+    """)
+    assert [x["nombre"] for x in contenido.listar_puntos(ciudad="Bogota", path=p)] == ["P1", "P2"]
