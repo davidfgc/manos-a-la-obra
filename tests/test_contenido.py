@@ -112,6 +112,28 @@ def test_opciones_filtro_valores_unicos_ordenados(tmp_path):
     assert opciones["ciudades"] == ["Bogota", "Medellin", "Quito"]
 
 
+def test_listar_grupos_devuelve_validos_e_ignora_malformados(tmp_path):
+    p = _escribir_yaml(tmp_path, """
+        grupos:
+          - {nombre: "Makers", url: "https://chat.whatsapp.com/abc"}
+          - {nombre: "Sin url"}
+          - "texto suelto"
+          - {url: "https://x/y"}
+          - {nombre: "Otro", url: "https://y"}
+    """)
+    grupos = contenido.listar_grupos(path=p)
+    assert [g["nombre"] for g in grupos] == ["Makers", "Otro"]
+
+
+def test_listar_grupos_sin_clave_o_archivo_devuelve_vacio(tmp_path):
+    p = _escribir_yaml(tmp_path, """
+        modelos_3d:
+          - {nombre: X, url: u}
+    """)
+    assert contenido.listar_grupos(path=p) == []
+    assert contenido.listar_grupos(path=tmp_path / "no_existe.yaml") == []
+
+
 def test_archivo_inexistente_devuelve_vacio(tmp_path):
     faltante = tmp_path / "no_existe.yaml"
     assert contenido.listar_modelos3d(path=faltante) == {"activos": [], "cubiertos": []}

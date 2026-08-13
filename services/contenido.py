@@ -119,3 +119,13 @@ def opciones_filtro_modelos(*, path=DATA_PATH):
     tamanos = sorted({m.get("tamano") for m in modelos if m.get("tamano")})
     ciudades = sorted({c for m in modelos for c in (m.get("ciudades") or []) if c})
     return {"destinatarios": destinatarios, "tamanos": tamanos, "ciudades": ciudades}
+
+
+def listar_grupos(*, path=DATA_PATH):
+    """Grupos/comunidades externas curados, para mostrar en la home.
+
+    Devuelve la lista de grupos validos (dict con ``nombre`` y ``url``);
+    ignora entradas malformadas.
+    """
+    grupos = _cargar(path).get("grupos") or []
+    return [g for g in grupos if isinstance(g, dict) and g.get("nombre") and g.get("url")]

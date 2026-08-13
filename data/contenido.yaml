@@ -122,3 +122,8 @@ puntos_acopio:
     pais: "Colombia"
     ciudad: "Bogotá"
     direccion: "Calle 69 # 14-30"
+
+# Grupos / comunidades externas mostradas en la home. Cada uno: {nombre, url}.
+grupos:
+  - nombre: "Makers unidos por Colombia"
+    url: "https://chat.whatsapp.com/FxATszkflYa8xzBwwN65kj?s=cl&p=i&ilr=4"

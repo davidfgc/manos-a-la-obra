@@ -7,7 +7,7 @@ paginas_bp = Blueprint("paginas", __name__)
 
 @paginas_bp.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", grupos=contenido.listar_grupos())
 
 
 @paginas_bp.route("/impresion-3d")

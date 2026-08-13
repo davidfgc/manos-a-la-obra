@@ -6,6 +6,12 @@ def test_home_ok_y_muestra_handle(client):
     assert "x.com/davidfgonzalezc" in cuerpo
 
 
+def test_home_muestra_grupos(client):
+    cuerpo = client.get("/").get_data(as_text=True)
+    assert "Otros grupos" in cuerpo
+    assert "Makers unidos por Colombia" in cuerpo
+
+
 def test_impresion_3d_ok_lista_modelos(client):
     resp = client.get("/impresion-3d")
     assert resp.status_code == 200

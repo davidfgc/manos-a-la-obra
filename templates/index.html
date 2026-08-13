@@ -30,4 +30,16 @@
     Reviso y agrego la información al sitio.</p>
   <small>La información es colaborativa; verifica antes de actuar.</small>
 </article>
+
+{% if grupos %}
+<article class="grupos">
+  <h3>Otros grupos</h3>
+  <p>Comunidades donde se coordina la ayuda.</p>
+  <div class="hero-cta">
+    {% for g in grupos %}
+    <a href="{{ g.url }}" target="_blank" rel="noopener" role="button" class="btn-ghost">{{ g.nombre }}</a>
+    {% endfor %}
+  </div>
+</article>
+{% endif %}
 {% endblock %}
