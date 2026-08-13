@@ -2,55 +2,69 @@
 {% block title %}Impresion 3D - Manos a la Obra{% endblock %}
 {% block content %}
 <h1>Archivos 3D para imprimir</h1>
+<p class="lede">Modelos ordenados por prioridad. Filtra por a quién ayudan, tamaño y ciudad.</p>
 
-<form method="get">
-  <div class="grid">
-    <select name="destinatario" aria-label="Destinatario">
-      <option value="">Todos los destinatarios</option>
-      {% for d in opciones.destinatarios %}
-      <option value="{{ d }}" {% if d == destinatario %}selected{% endif %}>{{ d|capitalize }}</option>
-      {% endfor %}
-    </select>
-    <select name="tamano" aria-label="Tamano">
-      <option value="">Todos los tamanos</option>
-      {% for t in opciones.tamanos %}
-      <option value="{{ t }}" {% if t == tamano %}selected{% endif %}>{{ t|capitalize }}</option>
-      {% endfor %}
-    </select>
-    <select name="ciudad" aria-label="Ciudad">
-      <option value="">Todas las ciudades</option>
-      {% for c in opciones.ciudades %}
-      <option value="{{ c }}" {% if c == ciudad %}selected{% endif %}>{{ c }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit">Filtrar</button>
-  </div>
+<form method="get" class="filters">
+  <select name="destinatario" aria-label="Destinatario">
+    <option value="">Todos los destinatarios</option>
+    {% for d in opciones.destinatarios %}
+    <option value="{{ d }}" {% if d == destinatario %}selected{% endif %}>{{ d|capitalize }}</option>
+    {% endfor %}
+  </select>
+  <select name="tamano" aria-label="Tamano">
+    <option value="">Todos los tamanos</option>
+    {% for t in opciones.tamanos %}
+    <option value="{{ t }}" {% if t == tamano %}selected{% endif %}>{{ t|capitalize }}</option>
+    {% endfor %}
+  </select>
+  <select name="ciudad" aria-label="Ciudad">
+    <option value="">Todas las ciudades</option>
+    {% for c in opciones.ciudades %}
+    <option value="{{ c }}" {% if c == ciudad %}selected{% endif %}>{{ c }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filtrar</button>
 </form>
 
-{% set iconos = {"alta": "🔴", "media": "🟠", "baja": "🟢"} %}
 {% set etiquetas = {"alta": "Prioridad alta", "media": "Prioridad media", "baja": "Prioridad baja"} %}
 
 {% if modelos.activos %}
+<div class="cards">
   {% for m in modelos.activos %}
-  {% set p = m.prioridad if m.prioridad in iconos else "media" %}
-  <article>
-    <h3><span class="prioridad" role="img" aria-label="{{ etiquetas[p] }}" title="{{ etiquetas[p] }}">{{ iconos[p] }}</span> {{ m.nombre }}</h3>
+  {% set p = m.prioridad if m.prioridad in etiquetas else "media" %}
+  <article class="need prioridad-{{ p }}">
+    <div class="need-top">
+      <span class="badge b-{{ p }}" role="img" aria-label="{{ etiquetas[p] }}" title="{{ etiquetas[p] }}"><span class="dot" aria-hidden="true"></span>{{ p|capitalize }}</span>
+      <h3>{{ m.nombre }}</h3>
+    </div>
+    {% if m.destinatario or m.tamano or m.material %}
+    <div class="tags">
+      {% if m.destinatario %}<span class="tag">{{ m.destinatario|capitalize }}</span>{% endif %}
+      {% if m.tamano %}<span class="tag">{{ m.tamano|capitalize }}</span>{% endif %}
+      {% if m.material %}<span class="tag">{{ m.material }}</span>{% endif %}
+    </div>
+    {% endif %}
     {% if m.descripcion %}<p>{{ m.descripcion }}</p>{% endif %}
-    {% if m.material %}<p><small>Material: {{ m.material }}</small></p>{% endif %}
     <a href="{{ m.url }}" target="_blank" rel="noopener" role="button">Ver / Descargar</a>
   </article>
   {% endfor %}
+</div>
 {% elif not modelos.cubiertos %}
-  <p>No hay archivos para ese filtro.</p>
+  <p class="empty">No hay archivos para ese filtro.</p>
 {% endif %}
 
 {% if modelos.cubiertos %}
-  <h2>Cubierto (ya no se necesita)</h2>
-  {% for m in modelos.cubiertos %}
-  <article class="cubierto">
-    <h3>{{ m.nombre }}</h3>
-    {% if m.descripcion %}<p>{{ m.descripcion }}</p>{% endif %}
-  </article>
-  {% endfor %}
+  <h2 class="covered-h">Cubierto (ya no se necesita)</h2>
+  <div class="cards">
+    {% for m in modelos.cubiertos %}
+    <article class="need cubierto">
+      <div class="need-top">
+        <span class="badge b-cubierto"><span class="dot" aria-hidden="true"></span>Cubierto</span>
+        <h3>{{ m.nombre }}</h3>
+      </div>
+      {% if m.descripcion %}<p>{{ m.descripcion }}</p>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
 {% endif %}
 {% endblock %}

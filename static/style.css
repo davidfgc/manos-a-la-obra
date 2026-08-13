@@ -1,9 +1,180 @@
-:root { --pico-font-family: system-ui, -apple-system, sans-serif; }
-main.container { padding-block: 2rem; }
-article { margin-block-end: 1rem; }
+/* ============================================================
+   Manos a la Obra — sistema de diseño (Centro de Mando Solidario)
+   Tema claro por diseño (claridad en emergencia). Autocontenido,
+   sin dependencias externas: fuentes del sistema, 0 KB de webfonts.
+   ============================================================ */
+:root{
+  --paper:#F4F7FA; --surface:#FFFFFF; --surface-2:#EAF1F7; --sunken:#F0F4F8;
+  --ink:#0E1B2A; --ink-2:#2E3E4E; --muted:#4C5A67; --line:#D7E0E9;
+  --primary:#0F4C81; --primary-strong:#0B3A63; --primary-tint:#E6EFF7;
+  --focus:#1668B0;
+  /* Triage — color semántico, aparte del acento */
+  --alta:#C1121F;   --alta-ink:#fff;
+  --media:#F2B705;  --media-ink:#3A2D00;
+  --baja:#2B9348;   --baja-ink:#fff;
+  --covered:#7A8896;
+  --shadow-sm:0 1px 2px rgba(14,27,42,.07);
+  --shadow:0 2px 6px rgba(14,27,42,.06),0 14px 34px rgba(14,27,42,.08);
+  --radius:14px; --radius-sm:10px;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,system-ui,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+}
 
-/* Indicador de prioridad junto al nombre del modelo 3D. */
-.prioridad { margin-inline-end: .35rem; }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:17px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+.container{max-width:1000px; margin:0 auto; padding:0 20px}
+main.container{padding-block:34px 60px}
+h1,h2,h3{margin:0 0 .45em; line-height:1.18; letter-spacing:-.02em; text-wrap:balance}
+h1{font-size:clamp(28px,5.4vw,40px); font-weight:850; letter-spacing:-.03em}
+h2{font-size:clamp(21px,3.4vw,27px); font-weight:800}
+h3{font-size:18px; font-weight:750}
+p{margin:0 0 1rem}
+a{color:var(--primary)}
+img{max-width:100%}
+small{color:var(--muted)}
+:focus-visible{outline:3px solid var(--focus); outline-offset:2px}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--primary); font-weight:600}
+.lede{color:var(--ink-2); font-size:18px; max-width:64ch; margin-top:-.2em}
 
-/* Modelo 3D marcado como cubierto (ya no se necesita): atenuado y tachado. */
-.cubierto { opacity: .55; text-decoration: line-through; }
+/* ---------------- Header ---------------- */
+.site-header{background:var(--surface); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:20}
+.site-header .container{display:flex; align-items:center; gap:16px; min-height:62px}
+.brand{display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--ink)}
+.brand .mark{width:34px; height:34px; border-radius:8px; background:var(--primary); display:grid; place-items:center; flex:none; box-shadow:var(--shadow-sm)}
+.brand .mark svg{width:20px; height:20px}
+.brand b{font-weight:800; letter-spacing:-.01em; font-size:16px; display:block; line-height:1.1}
+.brand small{font-weight:500; color:var(--muted); font-size:11.5px}
+.site-nav{margin-left:auto; display:flex; gap:4px; flex-wrap:wrap}
+.site-nav a{text-decoration:none; color:var(--ink-2); font-weight:650; font-size:14.5px; padding:8px 12px; border-radius:8px}
+.site-nav a:hover{background:var(--primary-tint); color:var(--primary)}
+.site-nav a[aria-current="page"]{background:var(--primary-tint); color:var(--primary)}
+
+/* ---------------- Buttons ---------------- */
+a[role="button"],button,.btn{
+  font-family:var(--sans); font-weight:700; font-size:15px; border-radius:10px;
+  padding:11px 17px; border:1.5px solid transparent; cursor:pointer;
+  display:inline-flex; gap:8px; align-items:center; justify-content:center;
+  text-decoration:none; line-height:1; background:var(--primary); color:#fff;
+}
+a[role="button"]:hover,button:hover,.btn:hover{background:var(--primary-strong)}
+a[role="button"].btn-ghost,button.btn-ghost,.btn-ghost{background:var(--surface); color:var(--primary); border-color:var(--line)}
+a[role="button"].btn-ghost:hover,button.btn-ghost:hover,.btn-ghost:hover{background:var(--primary-tint)}
+button:disabled{background:var(--surface-2); color:var(--muted); cursor:not-allowed}
+
+/* ---------------- Filter bar / forms ---------------- */
+.filters{
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:14px; margin-bottom:24px; box-shadow:var(--shadow-sm);
+}
+select{
+  flex:1 1 150px; font-family:var(--sans); font-size:15px; color:var(--ink);
+  background-color:var(--surface); border:1.5px solid var(--line); border-radius:10px;
+  padding:10px 34px 10px 12px; appearance:none; -webkit-appearance:none; cursor:pointer;
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="%234C5A67" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>');
+  background-repeat:no-repeat; background-position:right 11px center;
+}
+.filters button{flex:0 0 auto}
+
+/* ---------------- Hero (home) ---------------- */
+.hero{padding:8px 0 22px; border-bottom:1px solid var(--line); margin-bottom:26px}
+.hero h1{margin:.35em 0 .3em}
+.hero-cta{display:flex; flex-wrap:wrap; gap:11px; margin-top:20px}
+
+/* ---------------- Cards ---------------- */
+.cards{display:flex; flex-direction:column; gap:14px}
+.cards.two{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+article{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+  padding:18px 20px; box-shadow:var(--shadow-sm); margin:0;
+}
+article h2{font-size:19px}
+.need-top{display:flex; align-items:center; gap:11px; margin-bottom:10px}
+.need-top h3{margin:0; flex:1}
+
+/* need card = severity stripe + badge */
+.need{position:relative; padding-left:22px; overflow:hidden}
+.need::before{content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--covered)}
+.need.prioridad-alta::before{background:var(--alta)}
+.need.prioridad-media::before{background:var(--media)}
+.need.prioridad-baja::before{background:var(--baja)}
+
+/* priority badges */
+.badge{
+  display:inline-flex; align-items:center; gap:6px; flex:none;
+  border-radius:999px; padding:5px 11px; font-size:12px; font-weight:800;
+  letter-spacing:.02em; text-transform:uppercase; line-height:1;
+}
+.badge .dot{width:7px; height:7px; border-radius:50%; background:currentColor}
+.b-alta{background:var(--alta); color:var(--alta-ink)}
+.b-media{background:var(--media); color:var(--media-ink)}
+.b-baja{background:var(--baja); color:var(--baja-ink)}
+.b-cubierto{background:var(--surface-2); color:var(--covered); border:1px solid var(--line)}
+
+/* small attribute tags */
+.tags{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 12px}
+.tag{
+  font-size:12.5px; font-weight:600; color:var(--ink-2);
+  background:var(--sunken); border:1px solid var(--line); border-radius:999px; padding:4px 10px;
+}
+
+/* covered group */
+.covered-h{margin:30px 0 14px; font-size:16px; color:var(--muted)}
+.need.cubierto{opacity:.62}
+.need.cubierto h3{text-decoration:line-through}
+
+/* punto card */
+.punto .caticon{
+  width:32px; height:32px; border-radius:9px; background:var(--primary-tint);
+  color:var(--primary); display:grid; place-items:center; flex:none;
+}
+.punto .caticon svg{width:18px; height:18px}
+.punto .where{color:var(--ink-2); margin:-2px 0 10px; font-size:15px}
+.punto .metaline{display:flex; flex-wrap:wrap; gap:7px; margin:2px 0 12px}
+
+/* donaciones */
+details{
+  background:var(--sunken); border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:2px 14px; margin:4px 0 14px;
+}
+details summary{
+  cursor:pointer; font-weight:700; font-size:14px; color:var(--ink);
+  padding:11px 0; list-style:none; display:flex; align-items:center; gap:8px;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"＋"; color:var(--primary); font-weight:800}
+details[open] summary::before{content:"－"}
+details ul{margin:0 0 12px; padding-left:2px; list-style:none; display:flex; flex-direction:column; gap:7px}
+details li{font-size:13.5px; color:var(--ink-2)}
+details li strong{color:var(--ink)}
+details li .val{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+/* empty state */
+.empty{
+  background:var(--surface); border:1px dashed var(--line); border-radius:var(--radius);
+  padding:26px; text-align:center; color:var(--muted); font-weight:600;
+}
+
+/* aside X */
+.aside-x{margin-top:26px; border-left:4px solid var(--primary)}
+
+/* ---------------- Footer ---------------- */
+.site-footer{border-top:1px solid var(--line); background:var(--surface)}
+.site-footer .container{
+  padding-block:24px; display:flex; flex-wrap:wrap; gap:8px 24px; align-items:center;
+}
+.site-footer p{margin:0; font-size:13.5px; color:var(--muted)}
+.updated{display:inline-flex; align-items:center; gap:8px; color:var(--baja); font-weight:600; margin-left:auto}
+.updated .udot{width:8px; height:8px; border-radius:50%; background:var(--baja)}
+
+@media (max-width:520px){
+  main.container{padding-block:24px 44px}
+  .site-header .container{flex-wrap:wrap; min-height:0; padding-block:10px}
+  .site-nav{margin-left:0; width:100%}
+}

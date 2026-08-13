@@ -2,39 +2,44 @@
 {% block title %}Puntos de acopio - Manos a la Obra{% endblock %}
 {% block content %}
 <h1>Puntos de acopio</h1>
+<p class="lede">Lugares que reciben donaciones. Filtra por país y ciudad.</p>
 
-<form method="get">
-  <div class="grid">
-    <select name="pais" aria-label="Pais">
-      <option value="">Todos los paises</option>
-      {% for p in opciones.paises %}
-      <option value="{{ p }}" {% if p == pais %}selected{% endif %}>{{ p }}</option>
-      {% endfor %}
-    </select>
-    <select name="ciudad" aria-label="Ciudad">
-      <option value="">Todas las ciudades</option>
-      {% for c in opciones.ciudades %}
-      <option value="{{ c }}" {% if c == ciudad %}selected{% endif %}>{{ c }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit">Filtrar</button>
-  </div>
+<form method="get" class="filters">
+  <select name="pais" aria-label="Pais">
+    <option value="">Todos los paises</option>
+    {% for p in opciones.paises %}
+    <option value="{{ p }}" {% if p == pais %}selected{% endif %}>{{ p }}</option>
+    {% endfor %}
+  </select>
+  <select name="ciudad" aria-label="Ciudad">
+    <option value="">Todas las ciudades</option>
+    {% for c in opciones.ciudades %}
+    <option value="{{ c }}" {% if c == ciudad %}selected{% endif %}>{{ c }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit">Filtrar</button>
 </form>
 
 {% if puntos %}
+<div class="cards">
   {% for pt in puntos %}
-  <article>
-    <h3>{{ pt.nombre }}</h3>
-    <p>{{ pt.direccion }}{% if pt.ciudad %}, {{ pt.ciudad }}{% endif %}{% if pt.pais %}, {{ pt.pais }}{% endif %}</p>
+  <article class="punto">
+    <div class="need-top">
+      <span class="caticon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5-6-10a6 6 0 1112 0c0 5-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></span>
+      <h3>{{ pt.nombre }}</h3>
+    </div>
+    <p class="where">{{ pt.direccion }}{% if pt.ciudad %}, {{ pt.ciudad }}{% endif %}{% if pt.pais %}, {{ pt.pais }}{% endif %}</p>
     {% if pt.recibe %}<p><strong>Recibe:</strong> {{ pt.recibe }}</p>{% endif %}
-    {% if pt.horario %}<p><small>Horario: {{ pt.horario }}</small></p>{% endif %}
-    {% if pt.contacto %}<p><small>Contacto: {{ pt.contacto }}</small></p>{% endif %}
+    <div class="metaline">
+      {% if pt.horario %}<span class="tag">Horario: {{ pt.horario }}</span>{% endif %}
+      {% if pt.contacto %}<span class="tag">Contacto: {{ pt.contacto }}</span>{% endif %}
+    </div>
     {% if pt.donaciones %}
     <details>
       <summary>Donaciones monetarias</summary>
       <ul>
         {% for d in pt.donaciones %}
-        <li><strong>{{ d.metodo }}:</strong> {{ d.detalle }}</li>
+        <li><strong>{{ d.metodo }}:</strong> <span class="val">{{ d.detalle }}</span></li>
         {% endfor %}
       </ul>
     </details>
@@ -42,7 +47,8 @@
     <a href="{{ pt.mapa_url }}" target="_blank" rel="noopener" role="button">Ver en Google Maps</a>
   </article>
   {% endfor %}
+</div>
 {% else %}
-  <p>No hay puntos de acopio para ese filtro.</p>
+  <p class="empty">No hay puntos de acopio para ese filtro.</p>
 {% endif %}
 {% endblock %}
