@@ -25,3 +25,9 @@ def test_puntos_filtro_sin_resultados(client):
     resp = client.get("/puntos-acopio?pais=Narnia")
     assert resp.status_code == 200
     assert "No hay puntos de acopio para ese filtro." in resp.get_data(as_text=True)
+
+
+def test_puntos_muestra_donaciones(client):
+    # Al menos un punto real declara donaciones monetarias -> se renderiza el bloque.
+    cuerpo = client.get("/puntos-acopio").get_data(as_text=True)
+    assert "Donaciones monetarias" in cuerpo

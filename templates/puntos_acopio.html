@@ -29,6 +29,16 @@
     {% if pt.recibe %}<p><strong>Recibe:</strong> {{ pt.recibe }}</p>{% endif %}
     {% if pt.horario %}<p><small>Horario: {{ pt.horario }}</small></p>{% endif %}
     {% if pt.contacto %}<p><small>Contacto: {{ pt.contacto }}</small></p>{% endif %}
+    {% if pt.donaciones %}
+    <details>
+      <summary>Donaciones monetarias</summary>
+      <ul>
+        {% for d in pt.donaciones %}
+        <li><strong>{{ d.metodo }}:</strong> {{ d.detalle }}</li>
+        {% endfor %}
+      </ul>
+    </details>
+    {% endif %}
     <a href="{{ pt.mapa_url }}" target="_blank" rel="noopener" role="button">Ver en Google Maps</a>
   </article>
   {% endfor %}

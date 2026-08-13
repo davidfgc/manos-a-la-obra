@@ -57,6 +57,24 @@ def test_mapa_url_se_genera_cuando_falta(tmp_path):
     assert "Colombia" in punto["mapa_url"]
 
 
+def test_listar_puntos_pasa_donaciones(tmp_path):
+    p = _escribir_yaml(tmp_path, """
+        puntos_acopio:
+          - nombre: "P1"
+            pais: "Colombia"
+            ciudad: "Pereira"
+            direccion: "Calle 1"
+            donaciones:
+              - {metodo: "Daviplata", detalle: "3184785208"}
+              - {metodo: "PayPal", detalle: "x@y.com"}
+    """)
+    punto = contenido.listar_puntos(path=p)[0]
+    assert punto["donaciones"] == [
+        {"metodo": "Daviplata", "detalle": "3184785208"},
+        {"metodo": "PayPal", "detalle": "x@y.com"},
+    ]
+
+
 def test_mapa_url_respeta_override(tmp_path):
     p = _escribir_yaml(tmp_path, """
         puntos_acopio:
