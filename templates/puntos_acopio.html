@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Puntos de acopio - Manos a la Obra{% endblock %}
+{% block content %}
+<h1>Puntos de acopio</h1>
+
+<form method="get">
+  <div class="grid">
+    <select name="pais" aria-label="Pais">
+      <option value="">Todos los paises</option>
+      {% for p in opciones.paises %}
+      <option value="{{ p }}" {% if p == pais %}selected{% endif %}>{{ p }}</option>
+      {% endfor %}
+    </select>
+    <select name="ciudad" aria-label="Ciudad">
+      <option value="">Todas las ciudades</option>
+      {% for c in opciones.ciudades %}
+      <option value="{{ c }}" {% if c == ciudad %}selected{% endif %}>{{ c }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+  </div>
+</form>
+
+{% if puntos %}
+  {% for pt in puntos %}
+  <article>
+    <h3>{{ pt.nombre }}</h3>
+    <p>{{ pt.direccion }}{% if pt.ciudad %}, {{ pt.ciudad }}{% endif %}{% if pt.pais %}, {{ pt.pais }}{% endif %}</p>
+    {% if pt.recibe %}<p><strong>Recibe:</strong> {{ pt.recibe }}</p>{% endif %}
+    {% if pt.horario %}<p><small>Horario: {{ pt.horario }}</small></p>{% endif %}
+    {% if pt.contacto %}<p><small>Contacto: {{ pt.contacto }}</small></p>{% endif %}
+    <a href="{{ pt.mapa_url }}" target="_blank" rel="noopener" role="button">Ver en Google Maps</a>
+  </article>
+  {% endfor %}
+{% else %}
+  <p>No hay puntos de acopio para ese filtro.</p>
+{% endif %}
+{% endblock %}

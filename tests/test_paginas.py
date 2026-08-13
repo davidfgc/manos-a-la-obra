@@ -12,3 +12,15 @@ def test_impresion_3d_ok_lista_modelos(client):
     cuerpo = resp.get_data(as_text=True)
     assert "Archivos 3D para imprimir" in cuerpo
     assert "Ferula de dedo (ejemplo)" in cuerpo
+
+
+def test_puntos_ok(client):
+    resp = client.get("/puntos-acopio")
+    assert resp.status_code == 200
+    assert "Puntos de acopio" in resp.get_data(as_text=True)
+
+
+def test_puntos_filtro_sin_resultados(client):
+    resp = client.get("/puntos-acopio?pais=Narnia")
+    assert resp.status_code == 200
+    assert "No hay puntos de acopio para ese filtro." in resp.get_data(as_text=True)

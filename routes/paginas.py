@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 
 from services import contenido
 
@@ -14,3 +14,18 @@ def index():
 def impresion_3d():
     modelos = contenido.listar_modelos3d()
     return render_template("impresion_3d.html", modelos=modelos)
+
+
+@paginas_bp.route("/puntos-acopio")
+def puntos_acopio():
+    pais = request.args.get("pais") or None
+    ciudad = request.args.get("ciudad") or None
+    puntos = contenido.listar_puntos(pais=pais, ciudad=ciudad)
+    opciones = contenido.opciones_filtro()
+    return render_template(
+        "puntos_acopio.html",
+        puntos=puntos,
+        opciones=opciones,
+        pais=pais,
+        ciudad=ciudad,
+    )
