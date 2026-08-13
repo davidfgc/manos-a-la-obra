@@ -4,3 +4,11 @@ def test_home_ok_y_muestra_handle(client):
     cuerpo = resp.get_data(as_text=True)
     assert "Manos a la Obra" in cuerpo
     assert "x.com/davidfgonzalezc" in cuerpo
+
+
+def test_impresion_3d_ok_lista_modelos(client):
+    resp = client.get("/impresion-3d")
+    assert resp.status_code == 200
+    cuerpo = resp.get_data(as_text=True)
+    assert "Archivos 3D para imprimir" in cuerpo
+    assert "Ferula de dedo (ejemplo)" in cuerpo

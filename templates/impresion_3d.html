@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Impresion 3D - Manos a la Obra{% endblock %}
+{% block content %}
+<h1>Archivos 3D para imprimir</h1>
+{% if modelos %}
+  {% for m in modelos %}
+  <article>
+    <h3>{{ m.nombre }}</h3>
+    {% if m.descripcion %}<p>{{ m.descripcion }}</p>{% endif %}
+    {% if m.material %}<p><small>Material: {{ m.material }}</small></p>{% endif %}
+    <a href="{{ m.url }}" target="_blank" rel="noopener" role="button">Ver / Descargar</a>
+  </article>
+  {% endfor %}
+{% else %}
+  <p>Aun no hay archivos cargados.</p>
+{% endif %}
+{% endblock %}

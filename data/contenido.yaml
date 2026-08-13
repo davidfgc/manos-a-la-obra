@@ -1,0 +1,18 @@
+# Contenido curado del sitio. Editar y hacer push para publicar.
+# Entrecomillar valores ambiguos (telefonos, horarios).
+
+modelos_3d:
+  - nombre: "Ferula de dedo (ejemplo)"
+    descripcion: "Modelo de ejemplo. Reemplazar con un enlace real verificado."
+    url: "https://www.printables.com/"
+    material: "PLA o PETG"
+    categoria: "ferula"
+
+puntos_acopio:
+  - nombre: "Punto de acopio (ejemplo)"
+    pais: "Colombia"
+    ciudad: "Bogota"
+    direccion: "Direccion de ejemplo 123"
+    recibe: "Agua, alimentos no perecederos, insumos medicos"
+    horario: "8:00-18:00"
+    contacto: "Reemplazar con contacto real"
