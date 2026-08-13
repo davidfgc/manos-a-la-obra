@@ -12,8 +12,21 @@ def index():
 
 @paginas_bp.route("/impresion-3d")
 def impresion_3d():
-    modelos = contenido.listar_modelos3d()
-    return render_template("impresion_3d.html", modelos=modelos)
+    destinatario = request.args.get("destinatario") or None
+    tamano = request.args.get("tamano") or None
+    ciudad = request.args.get("ciudad") or None
+    modelos = contenido.listar_modelos3d(
+        destinatario=destinatario, tamano=tamano, ciudad=ciudad
+    )
+    opciones = contenido.opciones_filtro_modelos()
+    return render_template(
+        "impresion_3d.html",
+        modelos=modelos,
+        opciones=opciones,
+        destinatario=destinatario,
+        tamano=tamano,
+        ciudad=ciudad,
+    )
 
 
 @paginas_bp.route("/puntos-acopio")

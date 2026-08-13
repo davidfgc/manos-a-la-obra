@@ -1,3 +1,9 @@
 :root { --pico-font-family: system-ui, -apple-system, sans-serif; }
 main.container { padding-block: 2rem; }
 article { margin-block-end: 1rem; }
+
+/* Indicador de prioridad junto al nombre del modelo 3D. */
+.prioridad { margin-inline-end: .35rem; }
+
+/* Modelo 3D marcado como cubierto (ya no se necesita): atenuado y tachado. */
+.cubierto { opacity: .55; text-decoration: line-through; }

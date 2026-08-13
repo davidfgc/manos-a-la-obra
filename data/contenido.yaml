@@ -2,11 +2,38 @@
 # Entrecomillar valores ambiguos (telefonos, horarios).
 
 modelos_3d:
-  - nombre: "Ferula de dedo (ejemplo)"
-    descripcion: "Modelo de ejemplo. Reemplazar con un enlace real verificado."
-    url: "https://www.printables.com/"
-    material: "PLA o PETG"
-    categoria: "ferula"
+  # Campos nuevos, todos OPCIONALES:
+  #   prioridad:    alta | media | baja        (por defecto: media)
+  #   destinatario: personas | mascotas
+  #   tamano:       pequeno | mediano | grande
+  #   ciudades:     [lista de ciudades]        (sin lista = alcance general: aparece en cualquier filtro de ciudad)
+  #   cubierto:     true | false               (true = ya no se necesita; se muestra tachado al final)
+  # Sin 'ciudades' => alcance general (aparece con cualquier filtro de ciudad).
+  - nombre: "Férula grande para personas"
+    url: "https://drive.google.com/file/d/1T35pxpGdTMB4k15XpSyoeUDtBhCBk1Op/view?usp=drive_link"
+    prioridad: "alta"
+    destinatario: "personas"
+    tamano: "grande"
+  - nombre: "Férula mediana para personas"
+    url: "https://drive.google.com/file/d/1WTBUkzW1u0is7_KU2G-Q6kx4DvIDOIAr/view?usp=drive_link"
+    prioridad: "alta"
+    destinatario: "personas"
+    tamano: "mediano"
+  - nombre: "Férula pequeña para personas"
+    url: "https://drive.google.com/file/d/1at8jOMxd7oBIbjuTjk3B9FEMzK7Dw_r1/view?usp=drive_link"
+    prioridad: "alta"
+    destinatario: "personas"
+    tamano: "pequeno"
+  - nombre: "Férula grande para mascotas"
+    url: "https://drive.google.com/file/d/1mstceLIIyi2_5tvQDFCDk-iF2DTyW3No/view?usp=drive_link"
+    prioridad: "alta"
+    destinatario: "mascotas"
+    tamano: "grande"
+  - nombre: "Férula mediana para mascotas"
+    url: "https://drive.google.com/file/d/1vlKwwtRX03DP1CxyTNBI1XzWK5KQPp-L/view?usp=drive_link"
+    prioridad: "alta"
+    destinatario: "mascotas"
+    tamano: "mediano"
 
 puntos_acopio:
   - nombre: "Punto de acopio (ejemplo)"

@@ -11,7 +11,8 @@ def test_impresion_3d_ok_lista_modelos(client):
     assert resp.status_code == 200
     cuerpo = resp.get_data(as_text=True)
     assert "Archivos 3D para imprimir" in cuerpo
-    assert "Ferula de dedo (ejemplo)" in cuerpo
+    # Se renderiza al menos un modelo con su indicador de prioridad (estable ante renombrados).
+    assert 'aria-label="Prioridad alta"' in cuerpo
 
 
 def test_puntos_ok(client):
