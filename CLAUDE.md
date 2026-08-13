@@ -28,9 +28,14 @@ por pais/ciudad). El contenido lo cura el mantenedor editando `data/contenido.ya
   Entrecomillar valores ambiguos (telefonos, horarios).
 - `templates/` - Jinja2 + Pico CSS (CDN). `static/style.css` para overrides.
 
-## Deploy (Railway / Nixpacks)
+## Deploy (Railway)
 
-- `nixpacks.toml` arranca gunicorn con la app factory, bindeado a `0.0.0.0:$PORT`.
+- `railway.toml` (`[deploy] startCommand`) es la fuente de verdad del arranque:
+  `gunicorn 'app:create_app()' --bind 0.0.0.0:${PORT:-8080}`. Railway lo respeta con
+  cualquier builder y tiene prioridad sobre el comando autodetectado.
+- Railway usa por defecto el builder **Railpack** (mise + uv), que **ignora `nixpacks.toml`**;
+  ese archivo queda solo como fallback si se cambia el builder a Nixpacks. Sin `railway.toml`,
+  Railpack autogenera `gunicorn main:app`, que falla con `No module named 'main'`.
 - Endpoint de health: `/health`.
 - El MVP no requiere variables de entorno obligatorias (`X_HANDLE` es opcional).
 
